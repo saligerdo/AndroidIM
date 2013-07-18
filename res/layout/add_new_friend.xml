@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width = "fill_parent"
+   				  android:layout_height = "fill_parent"
+   				  android:orientation = "vertical">	   
+
+   <TextView 
+   		
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dip"
+        android:text="Friend username:"
+    />
+    
+    <EditText android:id="@+id/newFriendUsername"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:singleLine="true"
+        android:password="false"
+        android:padding="10dip"
+        android:layout_margin="10dip"
+    />  	
+    
+   <LinearLayout android:orientation="horizontal"
+    			  android:layout_width="fill_parent"
+    			  android:layout_height="wrap_content">
+	 <Button android:id="@+id/addFriend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add"
+    />
+    <Button android:id="@+id/cancel"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:text="@string/cancel"
+    />
+	</LinearLayout>			  
+   
+   			  
+</LinearLayout>

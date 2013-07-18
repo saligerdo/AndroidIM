@@ -1,0 +1,60 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="at.vcity.androidim"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+    <activity android:name=".FriendList">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"></action>
+				<category
+					android:name="android.intent.category.NORMAL">
+				</category>
+			</intent-filter>
+		</activity>
+		<service android:name=".services.IMService"></service>
+		<activity android:name=".Login">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"></action>
+				<category android:name="android.intent.category.LAUNCHER">
+				</category>
+			</intent-filter>
+		</activity>
+		<activity android:name=".Messaging">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"></action>
+				<category
+					android:name="android.intent.category.NORMAL">
+				</category>
+			</intent-filter>
+		</activity>
+		
+		
+	<activity android:name=".SignUp"><intent-filter><action android:name="android.intent.action.MAIN"></action>
+<category android:name="android.intent.category.NORMAL"></category>
+</intent-filter>
+</activity>
+<activity android:name=".AddFriend"><intent-filter><action android:name="android.intent.action.MAIN"></action>
+<category android:name="android.intent.category.NORMAL"></category>
+</intent-filter>
+</activity>
+<activity android:name=".UnApprovedFriendList"><intent-filter><action android:name="android.intent.action.MAIN"></action>
+<category android:name="android.intent.category.NORMAL"></category>
+</intent-filter>
+</activity>
+</application>
+
+
+</manifest>
+

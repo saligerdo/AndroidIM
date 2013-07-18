@@ -1,0 +1,41 @@
+<resources>
+	<string name="hello">AndroidIM</string>
+    <string name="app_name">AndroidIM</string>
+    <string name="friend_list">Friend List</string>
+    <string name="username">Username:</string>
+    <string name="password">Password:</string>
+    <string name="login">Login</string>
+    <string name="cancel">Cancel</string>
+    <string name="messaging">Messaging</string>
+    <string name="local_service_started">App service started</string>
+    <string name="local_service_stopped">App service stopped</string>
+	<string name="local_service_connected">local_service_connected</string>
+	<string name="OK">OK</string>
+	<string name="not_connected_to_service">Not connected to the service and 
+	this is not supposed to happened so please inform this situation to 
+	ahmetmermerkaya@hotmail.com</string>	
+	<string name="fill_both_username_and_password">Please fill both username and password</string>
+	<string name="make_sure_username_and_password_correct">Please make sure that
+	your username and password correct</string>
+	<string name="user_offline">This user is offline</string>
+	<string name="sign_up">Sign up</string>
+	<string name="exit_application">Exit</string>
+	<string name="password_again">Password(again):</string>
+	<string name="email">E-mail</string>
+	<string name="signup_fill_all_fields">Please fill all fields</string>
+	<string name="signup_type_same_password_in_password_fields">Type same password in password fields</string>
+	<string name="signup_failed">Sign up failed because of unknown reason</string>
+	<string name="signup_username_crashed">Your username have been already taken, please try another username</string>
+	<string name="signup_successfull">Your registration is completed successfully,\n you can login now </string>
+	<string name="username_and_password_length_short">Username and password length must be at least 5</string>
+	<string name="add_new_friend">Add new friend</string>
+	<string name="no_friend">You have no friend,\n you can add new friends by menu</string>
+	<string name="add">Add</string>
+	<string name="request_sent">Your request has been sent</string>
+	<string name="type_friend_username">Please type your friend username</string>
+	<string name="new_friend_request_exist">New friend request</string>
+	<string name="approve_selected_friends">Approve Selecteds and Discard Others</string>
+	<string name="not_connected_to_network">There is no available connected network</string>
+	<string name="message_cannot_be_sent">Message was not been able to sent</string>
+
+</resources>
