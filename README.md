@@ -21,7 +21,7 @@ Features
 How to make it run:
 
     WebAPI:
-        There is a folder whose name is "android-im", copy all files under "android-im" folder to a folder in your web server directory, 
+        There is a folder whose name is "android-im_WEBAPI", copy all files under "android-im" folder to a folder in your web server directory, 
         for instance android-im that can be accessed by http://192.168.7.5/android-im/ (192.168.7.5 is the IP address of computer which runs apache and mysql, 
         use local network IP address instead of using localhost or 127.0.0.1).
         Open the index.php and enter database connectivity parameters such as host, username, password etc. write error_reporting(0) in top of index.php
