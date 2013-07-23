@@ -226,17 +226,10 @@ public class FriendList extends ListActivity
 
 		Intent i = new Intent(this, Messaging.class);
 		FriendInfo friend = friendAdapter.getItem(position);
-		if (friend.status == STATUS.ONLINE)		
-		{
-			i.putExtra(FriendInfo.USERNAME, friend.userName);
-			i.putExtra(FriendInfo.PORT, friend.port);
-			i.putExtra(FriendInfo.IP, friend.ip);		
-			startActivity(i);
-		}
-		else 
-		{			
-			Toast.makeText(FriendList.this, R.string.user_offline, Toast.LENGTH_SHORT).show();
-		}
+		i.putExtra(FriendInfo.USERNAME, friend.userName);
+		i.putExtra(FriendInfo.PORT, friend.port);
+		i.putExtra(FriendInfo.IP, friend.ip);		
+		startActivity(i);
 	}
 
 
