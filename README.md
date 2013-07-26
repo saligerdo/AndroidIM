@@ -5,7 +5,7 @@ AndroidIM
 
 ###Wiki-Relation
 
-[Installation-Tutorial](wiki/Installation-Tutorial)
+[Installation-Tutorial](https://github.com/Pirngruber/AndroidIM/wiki/Installation-Tutorial)
 
 
 
