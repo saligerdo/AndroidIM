@@ -1,10 +1,16 @@
 AndroidIM
 =========
 
-Android Instant Messaging Application
+##Android Instant Messaging Application
+
+###Wiki-Relation
+
+[Installation-Tutorial](wiki/Installation-Tutorial)
 
 
-Features
+
+
+###Features
 
     User registration
     User authentication
@@ -18,7 +24,7 @@ Features
 
 
 
-How to make it run:
+###How to make it run:
 
     WebAPI:
         There is a folder whose name is "android-im_WEBAPI", copy all files under "android-im" folder to a folder in your web server directory, 
@@ -34,12 +40,12 @@ How to make it run:
     Then run your application in Eclipse with ADT plugin.
     it can be learned how to install Android SDK and ADT plugin.
 
-Support:
+###Support:
 
     Support now is given by Pirngruber Dominik (d.pirngruber@gmail.com)
 
 
-Author:
+###Author:
 
     The original Author was Ahmet Oguz Mermerkaya (mekya) www.mekya.com,
     he has made the start for this OpenSource Project, so give him a visit on his blog ;) 
