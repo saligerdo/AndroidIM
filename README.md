@@ -3,8 +3,9 @@ AndroidIM
 
 ##Android Instant Messaging Application
 
-###Wiki-Relation
+###VIL - Very Important Link's
 
+[Demo-App PlayStore](https://play.google.com/store/apps/details?id=at.vcity.androidim)
 [Installation-Tutorial](https://github.com/Pirngruber/AndroidIM/wiki/Installation-Tutorial)
 
 
@@ -27,10 +28,13 @@ AndroidIM
 ###How to make it run:
 
     WebAPI:
-        There is a folder whose name is "android-im_WEBAPI", copy all files under "android-im" folder to a folder in your web server directory, 
-        for instance android-im that can be accessed by http://192.168.7.5/android-im/ (192.168.7.5 is the IP address of computer which runs apache and mysql, 
+        There is a folder whose name is "android-im_WEBAPI", copy all files under "android-im" folder to a folder in            
+        your web server directory, 
+        for instance android-im that can be accessed by http://192.168.7.5/android-im/ (192.168.7.5 is the IP address of 
+        computer which runs apache and mysql, 
         use local network IP address instead of using localhost or 127.0.0.1).
-        Open the index.php and enter database connectivity parameters such as host, username, password etc. write error_reporting(0) in top of index.php
+        Open the index.php and enter database connectivity parameters such as host, username, password etc. write 
+        error_reporting(0) in top of index.php
         Create the tables in mysql database with the included android_im.sql
         
     Android APP:
@@ -43,9 +47,3 @@ AndroidIM
 ###Support:
 
     Support now is given by Pirngruber Dominik (d.pirngruber@gmail.com)
-
-
-###Author:
-
-    The original Author was Ahmet Oguz Mermerkaya (mekya) www.mekya.com,
-    he has made the start for this OpenSource Project, so give him a visit on his blog ;) 
