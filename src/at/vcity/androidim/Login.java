@@ -1,6 +1,8 @@
 package at.vcity.androidim;
 
 
+import java.io.UnsupportedEncodingException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -93,12 +95,14 @@ public class Login extends Activity {
 			public void onClick(View arg0) 
 			{					
 				if (imService == null) {
-					showDialog(NOT_CONNECTED_TO_SERVICE);
+					Toast.makeText(getApplicationContext(),R.string.not_connected_to_service, Toast.LENGTH_LONG).show();
+					//showDialog(NOT_CONNECTED_TO_SERVICE);
 					return;
 				}
 				else if (imService.isNetworkConnected() == false)
 				{
-					showDialog(NOT_CONNECTED_TO_NETWORK);
+					Toast.makeText(getApplicationContext(),R.string.not_connected_to_network, Toast.LENGTH_LONG).show();
+					//showDialog(NOT_CONNECTED_TO_NETWORK);
 					
 				}
 				else if (usernameText.length() > 0 && 
@@ -109,15 +113,23 @@ public class Login extends Activity {
 						private Handler handler = new Handler();
 						@Override
 						public void run() {
-							String result = imService.authenticateUser(usernameText.getText().toString(), passwordText.getText().toString());
+							String result = null;
+							try {
+								result = imService.authenticateUser(usernameText.getText().toString(), passwordText.getText().toString());
+							} catch (UnsupportedEncodingException e) {
+								
+								e.printStackTrace();
+							}
 							if (result == null || result.equals(AUTHENTICATION_FAILED)) 
 							{
 								/*
 								 * Authenticatin failed, inform the user
 								 */
 								handler.post(new Runnable(){
-									public void run() {										
-										showDialog(MAKE_SURE_USERNAME_AND_PASSWORD_CORRECT);
+									public void run() {	
+										Toast.makeText(getApplicationContext(),R.string.make_sure_username_and_password_correct, Toast.LENGTH_LONG).show();
+
+										//showDialog(MAKE_SURE_USERNAME_AND_PASSWORD_CORRECT);
 									}									
 								});
 														
@@ -148,7 +160,8 @@ public class Login extends Activity {
 					/*
 					 * Username or Password is not filled, alert the user
 					 */
-					showDialog(FILL_BOTH_USERNAME_AND_PASSWORD);
+					Toast.makeText(getApplicationContext(),R.string.fill_both_username_and_password, Toast.LENGTH_LONG).show();
+					//showDialog(FILL_BOTH_USERNAME_AND_PASSWORD);
 				}				
 			}       	
         });

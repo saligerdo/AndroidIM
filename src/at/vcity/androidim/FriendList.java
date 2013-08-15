@@ -1,7 +1,6 @@
 package at.vcity.androidim;
 
 import android.app.ListActivity;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -14,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -192,9 +192,12 @@ public class FriendList extends ListActivity
 				for (int j = 0; j < unApprovedFriends.length; j++) {
 					tmp = tmp.concat(unApprovedFriends[j].userName).concat(",");			
 				}
-				Notification notification = new Notification(R.drawable.stat_sample, 
+				NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+		    	.setSmallIcon(R.drawable.stat_sample)
+		    	.setContentTitle(getText(R.string.new_friend_request_exist));
+				/*Notification notification = new Notification(R.drawable.stat_sample, 
 						getText(R.string.new_friend_request_exist),
-						System.currentTimeMillis());
+						System.currentTimeMillis());*/
 
 				Intent i = new Intent(this, UnApprovedFriendList.class);
 				i.putExtra(FriendInfo.FRIEND_LIST, tmp);				
@@ -202,12 +205,15 @@ public class FriendList extends ListActivity
 				PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
 						i, 0);
 
-				notification.setLatestEventInfo(this, getText(R.string.new_friend_request_exist),
+				mBuilder.setContentText("You have new friend request(s)");
+				/*notification.setLatestEventInfo(this, getText(R.string.new_friend_request_exist),
 												"You have new friend request(s)", 
-												contentIntent);
+												contentIntent);*/
+				
+				mBuilder.setContentIntent(contentIntent);
 
 				
-				NM.notify(R.string.new_friend_request_exist, notification);			
+				NM.notify(R.string.new_friend_request_exist, mBuilder.build());			
 			}
 			else
 			{

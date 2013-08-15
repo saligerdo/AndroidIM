@@ -18,7 +18,7 @@ package at.vcity.androidim.services;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.net.URLDecoder;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Random;
 import java.util.Timer;
@@ -30,19 +30,15 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Binder;
-import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 import at.vcity.androidim.Login;
 import at.vcity.androidim.Messaging;
 import at.vcity.androidim.R;
@@ -76,7 +72,7 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 	public static final String MESSAGE_LIST_UPDATED = "Take Message List";
 	public ConnectivityManager conManager = null; 
 	private final int UPDATE_TIME_PERIOD = 15000;
-//	private static final int LISTENING_PORT_NO = 8956;
+//	private static final INT LISTENING_PORT_NO = 8956;
 	private String rawFriendList = new String();
 	private String rawMessageList = new String();
 
@@ -85,14 +81,11 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 	private final IBinder mBinder = new IMBinder();
 	private String username;
 	private String password;
-	private String userKey;
 	private boolean authenticatedUser = false;
 	 // timer to take the updated data from server
 	private Timer timer;
 	
 	private NotificationManager mNM;
-	
-	private IAppManager appManager;
 	
 	public class IMBinder extends Binder {
 		public IAppManager getService() {
@@ -164,12 +157,19 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 	 **/
     private void showNotification(String username, String msg) 
 	{       
-        // Set the icon, scrolling text and timestamp
-    	String title = username + ": " + 
+        // Set the icon, scrolling text and TIMESTAMP
+    	String title = "AndroidIM: You got a new Message! (" + username + ")";
+ 				
+    	String text = username + ": " + 
      				((msg.length() < 5) ? msg : msg.substring(0, 5)+ "...");
-        Notification notification = new Notification(R.drawable.stat_sample, 
-        					title,
-                System.currentTimeMillis());
+    	
+    	//NotificationCompat.Builder notification = new NotificationCompat.Builder(R.drawable.stat_sample, title,System.currentTimeMillis());
+    	NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+    	.setSmallIcon(R.drawable.stat_sample)
+    	.setContentTitle(title)
+    	.setContentText(text); 
+    	
+    	
 
         Intent i = new Intent(this, Messaging.class);
         i.putExtra(FriendInfo.USERNAME, username);
@@ -180,17 +180,17 @@ public class IMService extends Service implements IAppManager, IUpdateData {
                 i, 0);
 
         // Set the info for the views that show in the notification panel.
-        // msg.length()>15 ? msg : msg.substring(0, 15);
-        notification.setLatestEventInfo(this, "New message from " + username,
-                       						msg, 
-                       						contentIntent);
+        // msg.length()>15 ? MSG : msg.substring(0, 15);
+        mBuilder.setContentIntent(contentIntent); 
+        
+        mBuilder.setContentText("New message from " + username + ": " + msg);
         
         //TODO: it can be improved, for instance message coming from same user may be concatenated 
         // next version
         
         // Send the notification.
         // We use a layout id because it is a unique number.  We use it later to cancel.
-        mNM.notify((username+msg).hashCode(), notification);
+        mNM.notify((username+msg).hashCode(), mBuilder.build());
     }
 	 
 
@@ -199,20 +199,20 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 	}
 
 	
-	public String sendMessage(String  username, String  tousername, String message) 
+	public String sendMessage(String  username, String  tousername, String message) throws UnsupportedEncodingException 
 	{			
-		String params = "username="+ URLEncoder.encode(this.username) +
-						"&password="+ URLEncoder.encode(this.password) +
-						"&to=" + URLEncoder.encode(tousername) +
-						"&message="+ URLEncoder.encode(message) +
-						"&action="  + URLEncoder.encode("sendMessage")+
+		String params = "username="+ URLEncoder.encode(this.username,"UTF-8") +
+						"&password="+ URLEncoder.encode(this.password,"UTF-8") +
+						"&to=" + URLEncoder.encode(tousername,"UTF-8") +
+						"&message="+ URLEncoder.encode(message,"UTF-8") +
+						"&action="  + URLEncoder.encode("sendMessage","UTF-8")+
 						"&";		
 		Log.i("PARAMS", params);
 		return socketOperator.sendHttpRequest(params);		
 	}
 
 	
-	private String getFriendList() 	{		
+	private String getFriendList() throws UnsupportedEncodingException 	{		
 		// after authentication, server replies with friendList xml
 		
 		 rawFriendList = socketOperator.sendHttpRequest(getAuthenticateUserParams(username, password));
@@ -222,7 +222,7 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 		 return rawFriendList;
 	}
 	
-	private String getMessageList() 	{		
+	private String getMessageList() throws UnsupportedEncodingException 	{		
 		// after authentication, server replies with friendList xml
 		
 		 rawMessageList = socketOperator.sendHttpRequest(getAuthenticateUserParams(username, password));
@@ -238,8 +238,9 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 	 * authenticateUser: it authenticates the user and if succesful
 	 * it returns the friend list or if authentication is failed 
 	 * it returns the "0" in string type
+	 * @throws UnsupportedEncodingException 
 	 * */
-	public String authenticateUser(String usernameText, String passwordText) 
+	public String authenticateUser(String usernameText, String passwordText) throws UnsupportedEncodingException 
 	{
 		this.username = usernameText;
 		this.password = passwordText;	
@@ -316,20 +317,19 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 		
 	}  
 	
-	private String getAuthenticateUserParams(String usernameText, String passwordText) 
+	private String getAuthenticateUserParams(String usernameText, String passwordText) throws UnsupportedEncodingException 
 	{			
-		String params = "username=" + URLEncoder.encode(usernameText) +
-						"&password="+ URLEncoder.encode(passwordText) +
-						"&action="  + URLEncoder.encode("authenticateUser")+
-						"&port="    + URLEncoder.encode(Integer.toString(socketOperator.getListeningPort())) +
+		String params = "username=" + URLEncoder.encode(usernameText,"UTF-8") +
+						"&password="+ URLEncoder.encode(passwordText,"UTF-8") +
+						"&action="  + URLEncoder.encode("authenticateUser","UTF-8")+
+						"&port="    + URLEncoder.encode(Integer.toString(socketOperator.getListeningPort()),"UTF-8") +
 						"&";		
 		
 		return params;		
 	}
 
 	public void setUserKey(String value) 
-	{
-		this.userKey = value;		
+	{		
 	}
 
 	public boolean isNetworkConnected() {

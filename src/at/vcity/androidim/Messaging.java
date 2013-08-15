@@ -1,6 +1,8 @@
 package at.vcity.androidim;
 
 
+import java.io.UnsupportedEncodingException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -15,7 +17,6 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -99,16 +100,26 @@ public class Messaging extends Activity {
 					messageText.setText("");
 					Thread thread = new Thread(){					
 						public void run() {
-							if (imService.sendMessage(imService.getUsername(), friend.userName, message.toString()) == null)
-							{
-								
-								handler.post(new Runnable(){	
-
-									public void run() {
-										showDialog(MESSAGE_CANNOT_BE_SENT);										
-									}
+							try {
+								if (imService.sendMessage(imService.getUsername(), friend.userName, message.toString()) == null)
+								{
 									
-								});
+									handler.post(new Runnable(){	
+
+										public void run() {
+											
+									        Toast.makeText(getApplicationContext(),R.string.message_cannot_be_sent, Toast.LENGTH_LONG).show();
+
+											
+											//showDialog(MESSAGE_CANNOT_BE_SENT);										
+										}
+										
+									});
+								}
+							} catch (UnsupportedEncodingException e) {
+								Toast.makeText(getApplicationContext(),R.string.message_cannot_be_sent, Toast.LENGTH_LONG).show();
+
+								e.printStackTrace();
 							}
 						}						
 					};

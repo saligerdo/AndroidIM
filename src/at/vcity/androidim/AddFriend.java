@@ -55,7 +55,8 @@ public class AddFriend extends Activity {
 					finish();					
 				}
 				else{					
-					showDialog(TYPE_FRIEND_USERNAME);					
+					Toast.makeText(getApplicationContext(),R.string.type_friend_username, Toast.LENGTH_LONG).show();
+					//showDialog(TYPE_FRIEND_USERNAME);					
 				}
 			}
 			

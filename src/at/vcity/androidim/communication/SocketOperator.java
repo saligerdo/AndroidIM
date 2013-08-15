@@ -10,7 +10,6 @@ import java.net.MalformedURLException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -33,8 +32,6 @@ public class SocketOperator implements ISocketOperator
 
 	private boolean listening;
 
-	private IAppManager appManager;
-	
 	private class ReceiveConnection extends Thread {
 		Socket clientSocket = null;
 		public ReceiveConnection(Socket socket) 
@@ -73,8 +70,7 @@ public class SocketOperator implements ISocketOperator
 		}	
 	}
 
-	public SocketOperator(IAppManager appManager) {
-		this.appManager = appManager;	
+	public SocketOperator(IAppManager appManager) {	
 	}
 	
 	
@@ -166,46 +162,6 @@ public class SocketOperator implements ISocketOperator
 		this.listening = false;
 	}
 	
-	private Socket getSocket(InetAddress addr, int portNo) 
-	{
-		Socket socket = null;
-		if (sockets.containsKey(addr) == true) 
-		{
-			socket = sockets.get(addr);
-			// check the status of the socket
-			if  ( socket.isConnected() == false ||
-				  socket.isInputShutdown() == true ||
-				  socket.isOutputShutdown() == true ||
-				  socket.getPort() != portNo 
-				 ) 	
-			{			
-				// if socket is not suitable,  then create a new socket
-				sockets.remove(addr);				
-				try {
-					socket.shutdownInput();
-					socket.shutdownOutput();
-					socket.close();
-					socket = new Socket(addr, portNo);
-					sockets.put(addr, socket);
-				} 
-				catch (IOException e) {					
-					Log.e("getSocket: when closing and removing", "");
-				}				
-			}
-		}
-		else  
-		{
-			try {
-				socket = new Socket(addr, portNo);
-				sockets.put(addr, socket);
-			} catch (IOException e) {
-				Log.e("getSocket: when creating", "");				
-			}					
-		}
-		return socket;		
-	}
-
-
 	public void exit() 
 	{			
 		for (Iterator<Socket> iterator = sockets.values().iterator(); iterator.hasNext();) 
@@ -222,8 +178,6 @@ public class SocketOperator implements ISocketOperator
 		
 		sockets.clear();
 		this.stopListening();
-		appManager = null;
-//		timer.cancel();		
 	}
 
 

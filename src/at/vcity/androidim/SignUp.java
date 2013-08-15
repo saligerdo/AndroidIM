@@ -92,7 +92,7 @@ public class SignUp extends Activity {
 						eMailText.length() > 0
 						)
 					{
-						//TODO check email adress is valid
+						//TODO check email address is valid
 						
 						if (passwordText.getText().toString().equals(passwordAgainText.getText().toString())){
 						
@@ -110,14 +110,17 @@ public class SignUp extends Activity {
 		
 												public void run() {
 													if (result.equals(SERVER_RES_RES_SIGN_UP_SUCCESFULL)) {
-														showDialog(SIGN_UP_SUCCESSFULL);
+														Toast.makeText(getApplicationContext(),R.string.signup_successfull, Toast.LENGTH_LONG).show();
+														//showDialog(SIGN_UP_SUCCESSFULL);
 													}
 													else if (result.equals(SERVER_RES_SIGN_UP_USERNAME_CRASHED)){
-														showDialog(SIGN_UP_USERNAME_CRASHED);
+														Toast.makeText(getApplicationContext(),R.string.signup_username_crashed, Toast.LENGTH_LONG).show();
+														//showDialog(SIGN_UP_USERNAME_CRASHED);
 													}
 													else  //if (result.equals(SERVER_RES_SIGN_UP_FAILED)) 
 													{
-														showDialog(SIGN_UP_FAILED);
+														Toast.makeText(getApplicationContext(),R.string.signup_failed, Toast.LENGTH_LONG).show();
+														//showDialog(SIGN_UP_FAILED);
 													}			
 												}
 		
@@ -128,16 +131,19 @@ public class SignUp extends Activity {
 									thread.start();
 							}
 							else{
-								showDialog(USERNAME_AND_PASSWORD_LENGTH_SHORT);
+								Toast.makeText(getApplicationContext(),R.string.username_and_password_length_short, Toast.LENGTH_LONG).show();
+								//showDialog(USERNAME_AND_PASSWORD_LENGTH_SHORT);
 							}							
 						}
 						else {
-							showDialog(TYPE_SAME_PASSWORD_IN_PASSWORD_FIELDS);
+							Toast.makeText(getApplicationContext(),R.string.signup_type_same_password_in_password_fields, Toast.LENGTH_LONG).show();
+							//showDialog(TYPE_SAME_PASSWORD_IN_PASSWORD_FIELDS);
 						}
 						
 					}
 					else {
-						showDialog(FILL_ALL_FIELDS);
+						Toast.makeText(getApplicationContext(),R.string.signup_fill_all_fields, Toast.LENGTH_LONG).show();
+						//showDialog(FILL_ALL_FIELDS);
 						
 					}				
 				}       	
