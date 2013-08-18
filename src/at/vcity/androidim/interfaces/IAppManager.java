@@ -7,7 +7,6 @@ public interface IAppManager {
 	
 	public String getUsername();
 	public String sendMessage(String username,String tousername, String message) throws UnsupportedEncodingException;
-
 	public String authenticateUser(String usernameText, String passwordText) throws UnsupportedEncodingException; 
 	public void messageReceived(String username, String message);
 //	public void setUserKey(String value);

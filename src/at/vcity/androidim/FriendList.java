@@ -38,6 +38,8 @@ public class FriendList extends ListActivity
 	private static final int EXIT_APP_ID = Menu.FIRST + 1;
 	private IAppManager imService = null;
 	private FriendListAdapter friendAdapter;
+	
+	public String ownusername = new String();
 
 	private class FriendListAdapter extends BaseAdapter 
 	{		
@@ -72,6 +74,7 @@ public class FriendList extends ListActivity
 
 			return friends.length;
 		}
+		
 
 		public FriendInfo getItem(int position) {			
 
@@ -153,6 +156,7 @@ public class FriendList extends ListActivity
 			}    
 			
 			setTitle(imService.getUsername() + "'s friend list");
+			ownusername = imService.getUsername();
 		}
 		public void onServiceDisconnected(ComponentName className) {          
 			imService = null;

@@ -47,6 +47,7 @@ import at.vcity.androidim.interfaces.IAppManager;
 import at.vcity.androidim.interfaces.ISocketOperator;
 import at.vcity.androidim.interfaces.IUpdateData;
 import at.vcity.androidim.tools.FriendController;
+import at.vcity.androidim.tools.LocalStorageHandler;
 import at.vcity.androidim.tools.MessageController;
 import at.vcity.androidim.tools.XMLHandler;
 import at.vcity.androidim.types.FriendInfo;
@@ -67,6 +68,7 @@ import at.vcity.androidim.types.MessageInfo;
 public class IMService extends Service implements IAppManager, IUpdateData {
 //	private NotificationManager mNM;
 	
+	public static String USERNAME;
 	public static final String TAKE_MESSAGE = "Take_Message";
 	public static final String FRIEND_LIST_UPDATED = "Take Friend List";
 	public static final String MESSAGE_LIST_UPDATED = "Take Message List";
@@ -85,8 +87,11 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 	 // timer to take the updated data from server
 	private Timer timer;
 	
-	private NotificationManager mNM;
+
+	private LocalStorageHandler localstoragehandler; 
 	
+	private NotificationManager mNM;
+
 	public class IMBinder extends Binder {
 		public IAppManager getService() {
 			return IMService.this;
@@ -99,10 +104,11 @@ public class IMService extends Service implements IAppManager, IUpdateData {
     {   	
          mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 
+         localstoragehandler = new LocalStorageHandler(this);
         // Display a notification about us starting.  We put an icon in the status bar.
      //   showNotification();
     	conManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-    	
+    	new LocalStorageHandler(this);
     	
     	// Timer is used to take the friendList info every UPDATE_TIME_PERIOD;
 		timer = new Timer();   
@@ -194,8 +200,8 @@ public class IMService extends Service implements IAppManager, IUpdateData {
     }
 	 
 
-	public String getUsername() {		
-		return username;
+	public String getUsername() {
+		return this.username;
 	}
 
 	
@@ -253,7 +259,7 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 			// if user is authenticated then return string from server is not equal to AUTHENTICATION_FAILED
 			this.authenticatedUser = true;
 			rawFriendList = result;
-			
+			USERNAME = this.username;
 			Intent i = new Intent(FRIEND_LIST_UPDATED);					
 			i.putExtra(FriendInfo.FRIEND_LIST, rawFriendList);
 			sendBroadcast(i);
@@ -309,6 +315,7 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 			String activeFriend = FriendController.getActiveFriend();
 			if (activeFriend == null || activeFriend.equals(username) == false) 
 			{
+				localstoragehandler.insert(username,this.getUsername(), message.toString());
 				showNotification(username, message);
 			}
 			

@@ -70,7 +70,7 @@ public class XMLHandler extends DefaultHandler
 			}
 			
 			int unreadMessagecount = mUnreadMessages.size();
-			Log.i("MessageLOG", "mUnreadMessages="+unreadMessagecount );
+			//Log.i("MessageLOG", "mUnreadMessages="+unreadMessagecount );
 			for (int i = 0; i < unreadMessagecount; i++) 
 			{
 				messages[i] = mUnreadMessages.get(i);

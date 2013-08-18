@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 import at.vcity.androidim.interfaces.IAppManager;
 import at.vcity.androidim.services.IMService;
 import at.vcity.androidim.tools.FriendController;
+import at.vcity.androidim.tools.LocalStorageHandler;
 import at.vcity.androidim.types.FriendInfo;
 import at.vcity.androidim.types.MessageInfo;
 
@@ -34,18 +36,23 @@ import at.vcity.androidim.types.MessageInfo;
 public class Messaging extends Activity {
 
 	private static final int MESSAGE_CANNOT_BE_SENT = 0;
+	public String username;
 	private EditText messageText;
 	private EditText messageHistoryText;
 	private Button sendMessageButton;
 	private IAppManager imService;
 	private FriendInfo friend = new FriendInfo();
+	private LocalStorageHandler localstoragehandler; 
+	private Cursor dbCursor;
 	
 	private ServiceConnection mConnection = new ServiceConnection() {
       
+		
+		
 		public void onServiceConnected(ComponentName className, IBinder service) {          
-            imService = ((IMService.IMBinder)service).getService();          
+            imService = ((IMService.IMBinder)service).getService();
         }
-        public void onServiceDisconnected(ComponentName className) {          
+        public void onServiceDisconnected(ComponentName className) {
         	imService = null;
             Toast.makeText(Messaging.this, R.string.local_service_stopped,
                     Toast.LENGTH_SHORT).show();
@@ -70,10 +77,12 @@ public class Messaging extends Activity {
 		
 		Bundle extras = this.getIntent().getExtras();
 		
+		
 		friend.userName = extras.getString(FriendInfo.USERNAME);
 		friend.ip = extras.getString(FriendInfo.IP);
 		friend.port = extras.getString(FriendInfo.PORT);
 		String msg = extras.getString(MessageInfo.MESSAGETEXT);
+		 
 		
 		
 		setTitle("Messaging with " + friend.userName);
@@ -81,6 +90,23 @@ public class Messaging extends Activity {
 		
 	//	EditText friendUserName = (EditText) findViewById(R.id.friendUserName);
 	//	friendUserName.setText(friend.userName);
+		
+		
+		localstoragehandler = new LocalStorageHandler(this);
+		dbCursor = localstoragehandler.get(friend.userName, IMService.USERNAME );
+		
+		if (dbCursor.getCount() > 0){
+		int noOfScorer = 0;
+		dbCursor.moveToFirst();
+		    while ((!dbCursor.isAfterLast())&&noOfScorer<dbCursor.getCount()) 
+		    {
+		        noOfScorer++;
+
+				this.appendToMessageHistory(dbCursor.getString(2) , dbCursor.getString(3));
+		        dbCursor.moveToNext();
+		    }
+		}
+		localstoragehandler.close();
 		
 		if (msg != null) 
 		{
@@ -96,6 +122,8 @@ public class Messaging extends Activity {
 				if (message.length()>0) 
 				{		
 					appendToMessageHistory(imService.getUsername(), message.toString());
+					
+					localstoragehandler.insert(imService.getUsername(), friend.userName, message.toString());
 								
 					messageText.setText("");
 					Thread thread = new Thread(){					
@@ -195,7 +223,6 @@ public class Messaging extends Activity {
 		FriendController.setActiveFriend(friend.userName);		
 		
 		
-		
 	}
 	
 	
@@ -211,7 +238,9 @@ public class Messaging extends Activity {
 			if (username != null && message != null)
 			{
 				if (friend.userName.equals(username)) {
-					appendToMessageHistory(username, message);					
+					appendToMessageHistory(username, message);
+					localstoragehandler.insert(username,imService.getUsername(), message);
+					
 				}
 				else {
 					if (message.length() > 15) {
@@ -230,12 +259,21 @@ public class Messaging extends Activity {
 	public  void appendToMessageHistory(String username, String message) {
 		if (username != null && message != null) {
 			messageHistoryText.append(username + ":\n");								
-			messageHistoryText.append(message + "\n");	
+			messageHistoryText.append(message + "\n");
 		}
 	}
 	
 	
-	
+	@Override
+	protected void onDestroy() {
+	    super.onDestroy();
+	    if (localstoragehandler != null) {
+	    	localstoragehandler.close();
+	    }
+	    if (dbCursor != null) {
+	    	dbCursor.close();
+	    }
+	}
 	
 
 }
