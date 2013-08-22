@@ -5,6 +5,7 @@ AndroidIM
 
 ###VIL - Very Important Link's
 
+[V-City](http://www.v-city.at)<br/>
 [Demo-App PlayStore](https://play.google.com/store/apps/details?id=at.vcity.androidim)<br/>
 [Installation-Tutorial](https://github.com/Pirngruber/AndroidIM/wiki/Installation-Tutorial)
 
