@@ -1,6 +1,11 @@
 AndroidIM
 =========
 
+##AndroidIM - big update under development
+i'm soo sorry guys for keeping you this long without any update....
+had a really really busy time, now i'm back for projects and have already some really really cool things under development for you so stay tuned :)
+
+
 ##Android Instant Messaging Application
 
 ###VIL - Very Important Link's
