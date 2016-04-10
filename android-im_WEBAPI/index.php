@@ -6,24 +6,21 @@
 * 		Email: ahmetmermerkaya@hotmail.com
 *		Editor: Dominik Pirngruber
 *		Email: d.pirngruber@gmail.com
-* 		Date: Jun, 25, 2013   	
-* 	
-*		Supported actions: 
+* 		Date: Jun, 25, 2013
+*
+*		Supported actions:
 *			1.  authenticateUser
 *			    if user is authentiated return friend list
-* 		    
+*
 *			2.  signUpUser
-* 		
+*
 *			3.  addNewFriend
-* 		
+*
 * 			4.  responseOfFriendReqs
 *
 *			5.  testWebAPI
 *************************************/
-
-
 //TODO:  show error off
-
 require_once("mysql.class.php");
 
 $dbHost = "localhost";
@@ -53,6 +50,9 @@ $username = (isset($_REQUEST['username']) && count($_REQUEST['username']) > 0)
 $password = isset($_REQUEST['password']) ? md5($_REQUEST['password']) : NULL;
 $port = isset($_REQUEST['port']) ? $_REQUEST['port'] : NULL;
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : NULL;
+
+$db->createDB();
+
 if ($action == "testWebAPI")
 {
 	if ($db->testconnection()){
@@ -166,9 +166,30 @@ switch($action)
 			 				$sql = "insert into users(username, password, email)
 			 					values ('".$username."', '".$password."', '".$email."') ";
 
+
 							if ($db->query($sql))
 							{
 							 		$out = SUCCESSFUL;
+
+									$sqlfrom = "select Id from  users where username = '".$username."' limit 1";
+									if ($resultto = $db->query($sqlfrom))
+										{
+											while ($rowto = $db->fetchObject($resultto))
+											{
+												$uto = $rowto->Id;
+											}
+											$sql22 = "insert into friends(`providerId`, `requestId`, `status`) values ('7', '".$uto."', '1') ";
+
+												if ($db->query($sql22))
+												{
+														$out = SUCCESSFUL;
+												}
+												else {
+														$out = FAILED;
+												}
+											$resultto = NULL;
+										}
+
 							}
 							else {
 									$out = FAILED;
