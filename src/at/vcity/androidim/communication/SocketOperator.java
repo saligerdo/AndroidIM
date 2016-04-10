@@ -20,7 +20,7 @@ import at.vcity.androidim.interfaces.ISocketOperator;
 
 public class SocketOperator implements ISocketOperator
 {
-	private static final String AUTHENTICATION_SERVER_ADDRESS = "http://192.168.0.54/android-im/"; //TODO change to your WebAPI Address
+	private static final String AUTHENTICATION_SERVER_ADDRESS = "http://192.168.0.102/android-im/index.php"; //TODO change to your WebAPI Address
 	
 	private int listeningPort = 0;
 	
@@ -65,7 +65,7 @@ public class SocketOperator implements ISocketOperator
 				 }		
 				
 			} catch (IOException e) {
-				Log.e("ReceiveConnection.run: when receiving connection ","");
+				Log.e("AndroidIM_CON","ReceiveConnection.run: when receiving connection");
 			}			
 		}	
 	}

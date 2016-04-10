@@ -14,6 +14,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,7 +52,7 @@ public class Login extends Activity {
             // cast its IBinder to a concrete class and directly access it.
             imService = ((IMService.IMBinder)service).getService();  
             
-            if (imService.isUserAuthenticated() == true)
+            if (imService.isUserAuthenticated())
             {
             	Intent i = new Intent(Login.this, FriendList.class);																
 				startActivity(i);
@@ -99,11 +100,8 @@ public class Login extends Activity {
 					//showDialog(NOT_CONNECTED_TO_SERVICE);
 					return;
 				}
-				else if (imService.isNetworkConnected() == false)
-				{
-					Toast.makeText(getApplicationContext(),R.string.not_connected_to_network, Toast.LENGTH_LONG).show();
-					//showDialog(NOT_CONNECTED_TO_NETWORK);
-					
+				else if (!imService.isNetworkConnected()){
+					Toast.makeText(getApplicationContext(),"No Network available", Toast.LENGTH_LONG).show();
 				}
 				else if (usernameText.length() > 0 && 
 					passwordText.length() > 0)
@@ -197,7 +195,7 @@ public class Login extends Activity {
     			break;
     		case NOT_CONNECTED_TO_NETWORK:
     			message = R.string.not_connected_to_network;
-    			break;
+				break;
     		default:
     			break;
     	}

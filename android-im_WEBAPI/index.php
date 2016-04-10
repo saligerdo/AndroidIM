@@ -27,8 +27,8 @@
 require_once("mysql.class.php");
 
 $dbHost = "localhost";
-$dbUsername = "DBUSERNAME";
-$dbPassword = "DBPASSWORD";
+$dbUsername = "DB_USERNAME";
+$dbPassword = "DB_PASSWORD";
 $dbName = "DBNAME";
 
 

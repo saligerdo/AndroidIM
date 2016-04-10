@@ -35,6 +35,8 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
@@ -56,8 +58,8 @@ import at.vcity.androidim.types.MessageInfo;
 
 /**
  * This is an example of implementing an application service that runs locally
- * in the same process as the application.  The {@link LocalServiceController}
- * and {@link LocalServiceBinding} classes show how to interact with the
+ * in the same process as the application.  The {link LocalServiceController}
+ * and {link LocalServiceBinding} classes show how to interact with the
  * service.
  *
  * <p>Notice the use of the {@link NotificationManager} when interesting things
@@ -72,7 +74,7 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 	public static final String TAKE_MESSAGE = "Take_Message";
 	public static final String FRIEND_LIST_UPDATED = "Take Friend List";
 	public static final String MESSAGE_LIST_UPDATED = "Take Message List";
-	public ConnectivityManager conManager = null; 
+	public ConnectivityManager conManager = null;
 	private final int UPDATE_TIME_PERIOD = 15000;
 //	private static final INT LISTENING_PORT_NO = 8956;
 	private String rawFriendList = new String();
@@ -109,7 +111,7 @@ public class IMService extends Service implements IAppManager, IUpdateData {
      //   showNotification();
     	conManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
     	new LocalStorageHandler(this);
-    	
+
     	// Timer is used to take the friendList info every UPDATE_TIME_PERIOD;
 		timer = new Timer();   
 		
@@ -278,16 +280,16 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 						if (tmp != null) {
 							i.putExtra(FriendInfo.FRIEND_LIST, tmp);
 							sendBroadcast(i);	
-							Log.i("friend list broadcast sent ", "");
+							//Log.i("friend list broadcast sent ", "");
 						
 						if (tmp2 != null) {
 							i2.putExtra(MessageInfo.MESSAGE_LIST, tmp2);
 							sendBroadcast(i2);	
-							Log.i("friend list broadcast sent ", "");
+							//Log.i("friend list broadcast sent ", "");
 						}
 						}
 						else {
-							Log.i("friend list returned null", "");
+							//Log.i("friend list returned null", "");
 						}
 					}
 					catch (Exception e) {
@@ -319,7 +321,7 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 				showNotification(username, message);
 			}
 			
-			Log.i("TAKE_MESSAGE broadcast sent by im service", "");
+			//Log.i("TAKE_MESSAGE broadcast sent by im service", "");
 		}	
 		
 	}  
@@ -340,7 +342,8 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 	}
 
 	public boolean isNetworkConnected() {
-		return conManager.getActiveNetworkInfo().isConnected();
+		NetworkInfo netInfo = conManager.getActiveNetworkInfo();
+		return netInfo != null && netInfo.isConnectedOrConnecting();
 	}
 	
 	public boolean isUserAuthenticated(){
@@ -353,7 +356,7 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 	
 	@Override
 	public void onDestroy() {
-		Log.i("IMService is being destroyed", "...");
+		//Log.i("IMService is being destroyed", "...");
 		super.onDestroy();
 	}
 	
