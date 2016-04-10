@@ -12,7 +12,7 @@ had a really really busy time, now i'm back for projects and have already some r
 
 [V-City](http://www.v-city.at)<br/>
 [Demo-App PlayStore](https://play.google.com/store/apps/details?id=at.vcity.androidim)<br/>
-[Installation-Tutorial](https://github.com/Pirngruber/AndroidIM/wiki/Installation-Tutorial)
+[Installation-Tutorial](https://www.youtube.com/watch?v=zJq6RcmI3xY)
 
 
 
