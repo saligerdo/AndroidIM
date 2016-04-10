@@ -11,7 +11,7 @@ had a really really busy time, now i'm back for projects and have already some r
 ###VIL - Very Important Link's
 
 [V-City](http://www.v-city.at)<br/>
-[Demo-App PlayStore](https://play.google.com/store/apps/details?id=at.vcity.androidim)<br/>
+[Demo-App PlayStore](https://play.google.com/store/apps/details?id=at.vcity.androidim2)<br/>
 [Installation-Tutorial](https://www.youtube.com/watch?v=zJq6RcmI3xY)
 
 
