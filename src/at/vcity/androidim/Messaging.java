@@ -18,6 +18,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -110,8 +111,9 @@ public class Messaging extends Activity {
 		
 		if (msg != null) 
 		{
-			this.appendToMessageHistory(friend.userName , msg);
-			((NotificationManager)getSystemService(NOTIFICATION_SERVICE)).cancel((friend.userName+msg).hashCode());
+			//this.appendToMessageHistory(friend.userName , msg);
+
+			//((NotificationManager)getSystemService(NOTIFICATION_SERVICE)).cancel((friend.userName+msg).hashCode());
 		}
 		
 		sendMessageButton.setOnClickListener(new OnClickListener(){
@@ -170,6 +172,12 @@ public class Messaging extends Activity {
 			
 		});
 				
+	}
+
+	public static void cancelNotification(Context ctx, int notifyId) {
+		String ns = Context.NOTIFICATION_SERVICE;
+		NotificationManager nMgr = (NotificationManager) ctx.getSystemService(ns);
+		nMgr.cancel(notifyId);
 	}
 
 	@Override
@@ -240,7 +248,7 @@ public class Messaging extends Activity {
 				if (friend.userName.equals(username)) {
 					appendToMessageHistory(username, message);
 					localstoragehandler.insert(username,imService.getUsername(), message);
-					
+					Log.e("IM_MSG","Messaging:localstoragehandler.insert: "+message);
 				}
 				else {
 					if (message.length() > 15) {
@@ -257,9 +265,12 @@ public class Messaging extends Activity {
 	private MessageReceiver messageReceiver = new MessageReceiver();
 	
 	public  void appendToMessageHistory(String username, String message) {
+		Log.e("IM_MSG","Messaging:appendToMessageHistory: "+message);
 		if (username != null && message != null) {
 			messageHistoryText.append(username + ":\n");								
 			messageHistoryText.append(message + "\n");
+			Log.i("NOTIFICATION","Cancel: "+username+" : "+message);
+			cancelNotification(this,(username+message).hashCode());
 		}
 	}
 	

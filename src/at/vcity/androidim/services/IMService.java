@@ -280,12 +280,12 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 						if (tmp != null) {
 							i.putExtra(FriendInfo.FRIEND_LIST, tmp);
 							sendBroadcast(i);	
-							//Log.i("friend list broadcast sent ", "");
+							//Log.i("IM_MSG", "friend list broadcast sent");
 						
 						if (tmp2 != null) {
 							i2.putExtra(MessageInfo.MESSAGE_LIST, tmp2);
-							sendBroadcast(i2);	
-							//Log.i("friend list broadcast sent ", "");
+							sendBroadcast(i2);
+							//Log.i("IM_MSG", "MSG list broadcast sent");
 						}
 						}
 						else {
@@ -314,11 +314,13 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 			i.putExtra(MessageInfo.USERID, msg.userid);			
 			i.putExtra(MessageInfo.MESSAGETEXT, msg.messagetext);			
 			sendBroadcast(i);
+			Log.i("NOTIFICATION","Created: "+msg.messagetext);
 			String activeFriend = FriendController.getActiveFriend();
 			if (activeFriend == null || activeFriend.equals(username) == false) 
 			{
 				localstoragehandler.insert(username,this.getUsername(), message.toString());
 				showNotification(username, message);
+				Log.i("NOTIFICATION","showNotification: "+message);
 			}
 			
 			//Log.i("TAKE_MESSAGE broadcast sent by im service", "");
