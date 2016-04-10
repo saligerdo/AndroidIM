@@ -55,4 +55,4 @@ had a really really busy time, now i'm back for projects and have already some r
     Support now is given by Pirngruber Dominik (d.pirngruber@gmail.com)
 
 
-![WTFPL](http://www.wtfpl.net/wp-content/uploads/2012/12/logo-220x1601.png)
+![WTFPL](http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-1.png)
