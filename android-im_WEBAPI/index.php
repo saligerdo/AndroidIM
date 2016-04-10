@@ -78,6 +78,9 @@ if ($username == NULL || $password == NULL)
 $out = NULL;
 
 error_log($action."\r\n", 3, "error.log");
+
+$db->createDB();
+
 switch($action) 
 {
 	
