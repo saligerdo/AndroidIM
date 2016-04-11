@@ -171,25 +171,6 @@ switch($action)
 							{
 							 		$out = SUCCESSFUL;
 
-									$sqlfrom = "select Id from  users where username = '".$username."' limit 1";
-									if ($resultto = $db->query($sqlfrom))
-										{
-											while ($rowto = $db->fetchObject($resultto))
-											{
-												$uto = $rowto->Id;
-											}
-											$sql22 = "insert into friends(`providerId`, `requestId`, `status`) values ('7', '".$uto."', '1') ";
-
-												if ($db->query($sql22))
-												{
-														$out = SUCCESSFUL;
-												}
-												else {
-														$out = FAILED;
-												}
-											$resultto = NULL;
-										}
-
 							}
 							else {
 									$out = FAILED;
