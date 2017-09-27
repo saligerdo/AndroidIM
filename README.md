@@ -23,19 +23,9 @@ There is no support given anymore for this project.
 AndroidIM
 
 
-##AndroidIM - big update under development
-i'm soo sorry guys for keeping you this long without any update....
-had a really really busy time, now i'm back for projects and have already some really really cool things under development for you so stay tuned :)
 
 
 ##Android Instant Messaging Application
-
-###VIL - Very Important Link's
-
-[V-City](http://www.v-city.at)<br/>
-[Demo-App PlayStore](https://play.google.com/store/apps/details?id=at.vcity.androidim2)<br/>
-[Installation-Tutorial](https://www.youtube.com/watch?v=zJq6RcmI3xY)
-
 
 
 
@@ -53,7 +43,7 @@ had a really really busy time, now i'm back for projects and have already some r
 
 
 
-###How to make it run:
+###How to:
 
     WebAPI:
         There is a folder whose name is "android-im_WEBAPI", copy all files under "android-im" folder to a folder in            
