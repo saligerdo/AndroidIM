@@ -1,5 +1,27 @@
+
+
+OUTDATED
+========
+This Project will not be maintained or get Updates anymore!
+
+Support
+========
+There is no support given anymore for this project.
+
+
+
+
+
+
+
+
+
+
+
+
+
 AndroidIM
-=========
+
 
 ##AndroidIM - big update under development
 i'm soo sorry guys for keeping you this long without any update....
