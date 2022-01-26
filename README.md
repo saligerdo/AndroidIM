@@ -1,3 +1,11 @@
+Question (01/2022)
+========
+Should this project be maintained and developed again?
+
+Let me know your opinion with a mail to pirngruber@datahub.at. 
+I would also be happy if you write me how you got in touch with the project "Pirngruber/AndroidIM".
+
+
 
 
 OUTDATED
